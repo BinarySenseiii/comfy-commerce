@@ -17,6 +17,14 @@ export interface products {
   shipping: boolean
 }
 
+export interface product extends products {
+  stock: number
+  images: any[]
+  reviews: number 
+  stars: number 
+  description: string
+}
+
 export interface productsType {
   data?: products[]
   isLoading: boolean

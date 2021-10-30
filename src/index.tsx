@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import {ProductsProvider} from './context/ProductContext'
 import Router from './router/Router'
 import {QueryClient, QueryClientProvider} from 'react-query'
+import { ReactQueryDevtools } from 'react-query/devtools'
 
 import './styles/index.css'
 
@@ -15,6 +16,7 @@ ReactDOM.render(
       <ProductsProvider>
         <Router />
       </ProductsProvider>
+    <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById('root'),

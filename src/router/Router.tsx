@@ -7,6 +7,7 @@ const Home = React.lazy(() => import('../pages/HomePage'))
 const About = React.lazy(() => import('../pages/AboutPage'))
 const Error = React.lazy(() => import('../pages/ErrorPage'))
 const Checkout = React.lazy(() => import('../pages/CheckoutPage'))
+const SingleProduct = React.lazy(() => import('../pages/SingleProduct'))
 
 
 const Router: React.FC = () => {
@@ -19,6 +20,7 @@ const Router: React.FC = () => {
           <Route exact path="/" component={Home} />
           <Route exact path="/about" component={About} />
           <Route exact path="/checkout" component={Checkout} />
+          <Route exact path="/products/:id" component={SingleProduct} />
           <Route path="*" component={Error} />
         </Switch>
         <Footer />

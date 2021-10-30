@@ -6,6 +6,9 @@ import Hero from './Hero'
 import Services from './Services'
 import Contact from './Contact'
 import FeaturedProducts from './FeaturedProducts'
+import ProductImages from './ProductImages'
+import Stars from './Stars'
+import AddToCart from './AddToCart'
 
 export {
   Navbar,
@@ -16,4 +19,7 @@ export {
   Services,
   Contact,
   FeaturedProducts,
+  ProductImages,
+  Stars,
+  AddToCart,
 }

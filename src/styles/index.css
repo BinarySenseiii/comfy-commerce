@@ -132,6 +132,11 @@ p {
 }
 /*  global classes */
 
+h6 {
+  text-align: center;
+  padding: 4rem 0;
+}
+
 /* section */
 .section {
   padding: 5rem 0;
