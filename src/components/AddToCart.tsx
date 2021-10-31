@@ -1,12 +1,37 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
-import { FaCheck } from 'react-icons/fa'
+import {Link} from 'react-router-dom'
+import {FaCheck} from 'react-icons/fa'
+import {product} from '../types'
 // import { useCartContext } from '../context/cart_context'
 // import AmountButtons from './AmountButtons'
 
-const AddToCart = () => {
-  return <h4>addToCart </h4>
+const AddToCart: React.FC<{product?: product}> = ({product}) => {
+  const {id, stock, colors} = product!
+  const [mainColor, setMainColor] = useState(colors[0])
+
+  return (
+    <Wrapper>
+      <div className="colors">
+        <span>colors: </span>
+        <div>
+          {colors.map((color: string, index: number) => (
+            <button
+              key={index}
+              style={{background: color}}
+              className={`${
+                mainColor === color ? 'color-btn active' : 'color-btn'
+              }`}
+              onClick={() => setMainColor(color)}
+            >
+              {mainColor === color && <FaCheck />}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="btn-container"></div>
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.section`

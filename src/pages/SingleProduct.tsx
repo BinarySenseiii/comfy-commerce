@@ -45,7 +45,7 @@ const SingleProductPage: React.FC = () => {
     id: identity,
     company,
     images,
-    stars
+    stars,
   } = data!
 
   return (
@@ -75,7 +75,7 @@ const SingleProductPage: React.FC = () => {
               {company}
             </p>
             <hr />
-            {stock > 0 && <AddToCart />}
+            {stock > 0 && <AddToCart product={data} />}
           </section>
         </div>
       </div>
