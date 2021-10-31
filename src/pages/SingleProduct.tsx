@@ -1,5 +1,5 @@
-import React from 'react'
-import {useHistory, useParams} from 'react-router-dom'
+import React, {useEffect, useState} from 'react'
+import {useParams} from 'react-router-dom'
 import {single_product_url as url} from '../utils/Constants'
 import {formatPrice} from '../utils/helpers'
 import styled from 'styled-components'
@@ -12,7 +12,7 @@ import {AddToCart, PageHero, ProductImages, Stars} from '../components'
 
 const SingleProductPage: React.FC = () => {
   const {id} = useParams<{id: string}>()
-  const history = useHistory()
+  const [currentlyFetching, setCurrentlyFetching] = useState(true)
 
   // Query for single product
   const {data, isLoading, isError, error} = useQuery<product, Error>(
@@ -20,7 +20,15 @@ const SingleProductPage: React.FC = () => {
     () => axios.get(`${url}?id=${id}`).then(response => response.data),
   )
 
-  if (isLoading) {
+  useEffect(() => {
+    setTimeout(() => {
+      setCurrentlyFetching(false)
+    }, 2000)
+
+    return setCurrentlyFetching(true)
+  }, [])
+
+  if (isLoading || currentlyFetching) {
     return <h6>Loading...</h6>
   }
 
@@ -37,6 +45,7 @@ const SingleProductPage: React.FC = () => {
     id: identity,
     company,
     images,
+    stars
   } = data!
 
   return (
@@ -47,10 +56,10 @@ const SingleProductPage: React.FC = () => {
           back to products
         </Link>
         <div className="product-center">
-          <ProductImages />
+          <ProductImages images={images} />
           <section className="content">
             <h3>{name}</h3>
-            <Stars />
+            <Stars reviews={reviews} stars={stars} />
             <h5 className="price">{formatPrice(price)}</h5>
             <p className="desc">{description}</p>
             <p className="info">
