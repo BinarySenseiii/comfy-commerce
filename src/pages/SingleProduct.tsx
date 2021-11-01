@@ -10,26 +10,29 @@ import {product} from '../types'
 
 import {AddToCart, PageHero, ProductImages, Stars} from '../components'
 
+import Loader from 'react-loader-spinner'
+
 const SingleProductPage: React.FC = () => {
   const {id} = useParams<{id: string}>()
-  const [currentlyFetching, setCurrentlyFetching] = useState(true)
-
   // Query for single product
-  const {data, isLoading, isError, error} = useQuery<product, Error>(
-    'product',
-    () => axios.get(`${url}?id=${id}`).then(response => response.data),
+  const {data, isLoading, isError, error, isFetching} = useQuery<
+    product,
+    Error
+  >('product', () =>
+    axios.get(`${url}?id=${id}`).then(response => response.data),
   )
-
-  useEffect(() => {
-    setTimeout(() => {
-      setCurrentlyFetching(false)
-    }, 2000)
-
-    return setCurrentlyFetching(true)
-  }, [])
-
-  if (isLoading || currentlyFetching) {
-    return <h6>Loading...</h6>
+  if (isLoading || isFetching) {
+    return (
+      <div style={{display: 'flex', justifyContent: 'center'}}>
+        <Loader
+          type="ThreeDots"
+          color="#AB7B60"
+          height={80}
+          width={80}
+          timeout={60000}
+        />
+      </div>
+    )
   }
 
   if (isError) {

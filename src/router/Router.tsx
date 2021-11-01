@@ -1,6 +1,8 @@
 import React, {Suspense} from 'react'
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
 import {Navbar, Sidebar, Footer} from '../components'
+import Loader from 'react-loader-spinner'
+import styled from 'styled-components'
 
 // Pages
 const Home = React.lazy(() => import('../pages/HomePage'))
@@ -9,11 +11,21 @@ const Error = React.lazy(() => import('../pages/ErrorPage'))
 const Checkout = React.lazy(() => import('../pages/CheckoutPage'))
 const SingleProduct = React.lazy(() => import('../pages/SingleProduct'))
 
-
 const Router: React.FC = () => {
   return (
     <BrowserRouter>
-      <Suspense fallback={<p>Loading...</p>}>
+      <Suspense
+        fallback={
+          <Wrapper>
+            <Loader
+              type="Oval"
+              color="#AB7B60"
+              height={50}
+              width={50}
+            />
+          </Wrapper>
+        }
+      >
         <Navbar />
         <Sidebar />
         <Switch>
@@ -29,4 +41,10 @@ const Router: React.FC = () => {
   )
 }
 
+const Wrapper = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`
 export default Router
