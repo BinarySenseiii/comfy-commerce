@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import {useParams} from 'react-router-dom'
 import {single_product_url as url} from '../utils/Constants'
 import {formatPrice} from '../utils/helpers'
@@ -14,7 +14,6 @@ import Loader from 'react-loader-spinner'
 
 const SingleProductPage: React.FC = () => {
   const {id} = useParams<{id: string}>()
-  // Query for single product
   const {data, isLoading, isError, error, isFetching} = useQuery<
     product,
     Error

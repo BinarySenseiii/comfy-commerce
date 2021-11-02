@@ -13,7 +13,7 @@ const Home: React.FC = () => {
   // Queries
   const {data, isLoading, isError} = useQuery<products[], Error>(
     'products',
-    () => axios.get(url).then(response => response.data),
+    () => axios.get(url).then(response => response.data)
   )
 
   React.useEffect(() => {
