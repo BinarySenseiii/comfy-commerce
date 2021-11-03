@@ -17,9 +17,10 @@ const SingleProductPage: React.FC = () => {
   const {data, isLoading, isError, error, isFetching} = useQuery<
     product,
     Error
-  >('product', () =>
-    axios.get(`${url}?id=${id}`).then(response => response.data),
-  )
+  >(['product', id], async () => {
+    const response = await axios.get(`${url}?id=${id}`)
+    return await response?.data
+  })
   if (isLoading || isFetching) {
     return (
       <div style={{display: 'flex', justifyContent: 'center'}}>

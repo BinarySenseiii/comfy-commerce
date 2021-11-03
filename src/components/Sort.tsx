@@ -1,9 +1,57 @@
 import React from 'react'
-import { useFilterContext } from '../context/FiltersContext'
-import { BsFillGridFill, BsList } from 'react-icons/bs'
+import {sortT, useFilterContext} from '../context/FiltersContext'
+import {BsFillGridFill, BsList} from 'react-icons/bs'
+import {ACTIONS} from '../constants/Actions'
 import styled from 'styled-components'
+
 const Sort = () => {
-  return <h4>sort </h4>
+  const {state, dispatch} = useFilterContext()
+  const {Grid_view, filter_products: products, sort} = state
+
+  const updateSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    // const name = e.target.name
+    const value = e.target.value
+
+    dispatch({type: ACTIONS.UPDATE_SORT, payload: (value) as sortT})
+  }
+
+  React.useEffect(() => {
+    dispatch({type: ACTIONS.SORT_PRODUCTS})
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sort])
+
+  return (
+    <Wrapper>
+      <div className="btn-container">
+        <button
+          type="button"
+          className={`${Grid_view && 'active'}`}
+          onClick={() => dispatch({type: ACTIONS.SET_GRID_VIEW})}
+        >
+          <BsFillGridFill />
+        </button>
+        <button
+          type="button"
+          className={`${!Grid_view && 'active'}`}
+          onClick={() => dispatch({type: ACTIONS.SET_LIST_VIEW})}
+        >
+          <BsList />
+        </button>
+      </div>
+      <p>{products.length} products found</p>
+      <hr />
+      <form>
+        <label htmlFor="sort">sort by </label>
+        <select name="sort" id="sort" value={sort} onChange={updateSort}>
+          <option value="price-lowest">price (lowest)</option>
+          <option value="price-highest">price (highest)</option>
+          <option value="name-a">name (a-z)</option>
+          <option value="name-z">name (z-a)</option>
+        </select>
+      </form>
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.section`
