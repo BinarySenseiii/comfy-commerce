@@ -9,15 +9,22 @@ interface IState {
   all_products: products[]
   Grid_view: boolean
   sort: sortT
+  filters: any
 }
 
 type IActions =
   | {type: ACTIONS.LOAD_PRODUCTS; payload: products[]}
   | {type: ACTIONS.SORT_PRODUCTS}
+  | {type: ACTIONS.FILTER_PRODUCTS}
+  | {type: ACTIONS.CLEAR_FILTERS}
   | {type: ACTIONS.SET_GRID_VIEW | ACTIONS.SET_LIST_VIEW}
   | {
       type: ACTIONS.UPDATE_SORT
       payload: sortT
+    }
+  | {
+      type: ACTIONS.UPDATE_FILTERS
+      payload: {name: string; value: string}
     }
 
 interface IContextModel {
@@ -30,6 +37,16 @@ const initialState: IState = {
   all_products: [],
   Grid_view: true,
   sort: 'price-lowest',
+  filters: {
+    text: '',
+    company: 'all',
+    category: 'all',
+    colors: 'all',
+    min_price: 0,
+    max_price: 0,
+    price: 0,
+    shipping: false,
+  },
 }
 
 const FilterContext = React.createContext({} as IContextModel)
@@ -37,15 +54,36 @@ const FilterContext = React.createContext({} as IContextModel)
 const reducer = (state: IState, action: IActions) => {
   switch (action.type) {
     case ACTIONS.LOAD_PRODUCTS:
+      let maxPrice = action.payload.map(p => p.price)
+      // @ts-ignore
+      maxPrice = Math.max(...maxPrice)
       return {
         ...state,
         all_products: [...action.payload],
         filter_products: [...action.payload],
+        filters: {
+          ...state.filters,
+          max_price: maxPrice,
+          price: maxPrice,
+        },
       }
     case ACTIONS.UPDATE_SORT:
       return {
         ...state,
         sort: action.payload,
+      }
+    case ACTIONS.CLEAR_FILTERS:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          text: '',
+          company: 'all',
+          category: 'all',
+          colors: 'all',
+          price: state.filters.max_price,
+          shipping: false,
+        },
       }
     case ACTIONS.SORT_PRODUCTS:
       const {sort, filter_products} = state
@@ -73,6 +111,58 @@ const reducer = (state: IState, action: IActions) => {
         ...state,
         filter_products: tempProducts,
       } // end Sort nested Switch
+    case ACTIONS.UPDATE_FILTERS:
+      const {name, value} = action.payload
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          [name]: value,
+        },
+      }
+    case ACTIONS.FILTER_PRODUCTS:
+      const {all_products} = state
+      const {text, category, company, colors, shipping, price} = state.filters
+      let tempProducs = [...all_products]
+      // filtering
+      //Text
+      if (text) {
+        tempProducs = tempProducs.filter(products =>
+          products.name.toLowerCase().startsWith(text),
+        )
+      }
+      // category
+      if (category !== 'all') {
+        tempProducs = tempProducs.filter(
+          products => products.category === category,
+        )
+      }
+      // category
+      if (company !== 'all') {
+        tempProducs = tempProducs.filter(
+          products => products.company === company,
+        )
+      }
+
+      // colors
+      if (colors !== 'all') {
+        tempProducs = tempProducs.filter(product => {
+          return product.colors.find(color => color === colors)
+        })
+      }
+
+      // shipping
+      if (shipping) {
+        tempProducs = tempProducs.filter(products => products.shipping === true)
+      }
+
+      // price
+      tempProducs = tempProducs.filter(products => products.price <= price)
+
+      return {
+        ...state,
+        filter_products: tempProducs,
+      }
     case ACTIONS.SET_GRID_VIEW:
       return {
         ...state,

@@ -15,7 +15,7 @@ const ProductList = () => {
     )
   }
 
-  if(Grid_view === false) {
+  if (Grid_view === false) {
     return <ListView products={products} />
   }
 

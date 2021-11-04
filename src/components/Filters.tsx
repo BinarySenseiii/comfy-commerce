@@ -1,11 +1,172 @@
-import React from 'react'
+import React, {memo} from 'react'
 import styled from 'styled-components'
-import { useFilterContext } from '../context/FiltersContext'
-import { getUniqueValues, formatPrice } from '../utils/helpers'
-import { FaCheck } from 'react-icons/fa'
+import {useFilterContext} from '../context/FiltersContext'
+import {getUniqueValues, formatPrice} from '../utils/helpers'
+import {FaCheck} from 'react-icons/fa'
+import {ACTIONS} from '../constants/Actions'
 
 const Filters = () => {
-  return <h4>filters</h4>
+  const {state, dispatch} = useFilterContext()
+  const {filters, all_products, sort} = state
+
+  const clearFilters = () => {
+    dispatch({type: ACTIONS.CLEAR_FILTERS})
+  }
+
+  const updateFilters = (e: any) => {
+    let name = e.target.name
+    let value = e.target.value
+
+    switch (name) {
+      case 'category':
+        value = e.target.textContent
+        break
+      case 'colors':
+        value = e.target.dataset.color
+        break
+      case 'price':
+        value = Number(value)
+        break
+      case 'shipping':
+        value = e.target.checked
+        break
+    }
+
+    dispatch({type: ACTIONS.UPDATE_FILTERS, payload: {name, value}})
+  }
+
+  
+
+  React.useEffect(() => {
+    dispatch({type: ACTIONS.FILTER_PRODUCTS})
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, sort, filters ])
+
+  const categories = getUniqueValues(all_products, 'category')
+  const companies = getUniqueValues(all_products, 'company')
+  const colors = getUniqueValues(all_products, 'colors')
+
+  return (
+    <Wrapper>
+      <div className="content">
+        <form onSubmit={e => e.preventDefault()}>
+          {/* TODO: search Input */}
+          <div className="form-control">
+            <input
+              type="text"
+              name="text"
+              placeholder="search"
+              className="search-input"
+              value={filters.text}
+              onChange={updateFilters}
+            />
+          </div>
+          {/* TODO: categories */}
+          <div className="form-control">
+            <h5>Category</h5>
+            <div>
+              {categories.map((category: string, index: number) => (
+                <button
+                  onClick={updateFilters}
+                  type="button"
+                  name="category"
+                  key={index}
+                  className={`${filters.category === category && 'active'}`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          </div>
+          {/* TODO: companies */}
+          <div className="form-control">
+            <h5>company</h5>
+            <select
+              name="company"
+              onChange={updateFilters}
+              value={filters.company}
+              className="company"
+            >
+              {companies.map((company: string, index: number) => (
+                <option key={index} value={company}>
+                  {company}
+                </option>
+              ))}
+            </select>
+          </div>
+          {/* TODO: colors */}
+          <div className="form-control">
+            <h5>colors</h5>
+            <div className="colors">
+              {colors.map((color: string, index: number) => {
+                if (color === 'all') {
+                  return (
+                    <button
+                      key={index}
+                      name="colors"
+                      data-color="all"
+                      onClick={updateFilters}
+                      className={` all-btn ${
+                        filters.colors === 'all' && 'active'
+                      }`}
+                    >
+                      all
+                    </button>
+                  )
+                } else {
+                  return (
+                    <button
+                      key={index}
+                      name="colors"
+                      data-color={color}
+                      onClick={updateFilters}
+                      style={{background: color}}
+                      className={`${
+                        filters.color === color
+                          ? 'active color-btn'
+                          : 'color-btn'
+                      }`}
+                    >
+                      {filters.colors === color && <FaCheck />}
+                    </button>
+                  )
+                }
+              })}
+            </div>
+          </div>
+          {/* TODO: price */}
+          <div className="form-control">
+            <h5>price</h5>
+            <div className="price">{formatPrice(filters.price)}</div>
+            <input
+              min={filters.min_price}
+              max={filters.max_price}
+              type="range"
+              name="price"
+              value={filters.price}
+              onChange={updateFilters}
+            />
+          </div>
+          {/* TODO: shipping */}
+          <div className="form-control shipping">
+            <label htmlFor="shipping">free shipping</label>
+            <input
+              onChange={updateFilters}
+              checked={filters.shipping}
+              type="checkbox"
+              name="shipping"
+              id="shipping"
+            />
+          </div>
+        </form>
+        <button type="button" className='clear-btn' onClick={clearFilters}>
+            clear filters
+        </button>
+      </div>
+    </Wrapper>
+    
+  )
 }
 
 const Wrapper = styled.section`
@@ -107,4 +268,4 @@ const Wrapper = styled.section`
   }
 `
 
-export default Filters
+export default memo(Filters)
