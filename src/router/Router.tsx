@@ -3,6 +3,7 @@ import {BrowserRouter, Switch, Route} from 'react-router-dom'
 import {Navbar, Sidebar, Footer} from '../components'
 import Loader from 'react-loader-spinner'
 import styled from 'styled-components'
+import {useAuth0} from '@auth0/auth0-react'
 
 // Pages
 const Home = React.lazy(() => import('../pages/HomePage'))
@@ -13,20 +14,14 @@ const SingleProduct = React.lazy(() => import('../pages/SingleProduct'))
 const Products = React.lazy(() => import('../pages/ProductsPage'))
 const CartPage = React.lazy(() => import('../pages/CartPage'))
 
-
-
 const Router: React.FC = () => {
+  const {isAuthenticated} = useAuth0()
   return (
     <BrowserRouter>
       <Suspense
         fallback={
           <Wrapper>
-            <Loader
-              type="Oval"
-              color="#AB7B60"
-              height={50}
-              width={50}
-            />
+            <Loader type="Oval" color="#AB7B60" height={50} width={50} />
           </Wrapper>
         }
       >
@@ -35,7 +30,9 @@ const Router: React.FC = () => {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/about" component={About} />
-          <Route exact path="/checkout" component={Checkout} />
+          {isAuthenticated && (
+            <Route exact path="/checkout" component={Checkout} />
+          )}
           <Route exact path="/products" component={Products} />
           <Route exact path="/products/:id" component={SingleProduct} />
           <Route exact path="/cart" component={CartPage} />
