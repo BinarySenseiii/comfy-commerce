@@ -40,7 +40,7 @@ const Navbar: React.FC = () => {
             ) 
           })}
           {isAuthenticated && <li>
-            <Link to="checkout">checkout</Link>
+            <a href="https://buy.stripe.com/test_28o4gHerKe9W4JWeUU">checkout</a>
           </li>}
         </ul>
         <CartButtons />

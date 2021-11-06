@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import {useCartContext} from '../context/CartContext'
 import {formatPrice} from '../utils/helpers'
-import {Link} from 'react-router-dom'
 import {useAuth0} from '@auth0/auth0-react'
 
 const CartTotals = () => {
@@ -25,9 +24,9 @@ const CartTotals = () => {
           </h4>
         </article>
         {isAuthenticated ? (
-          <Link to="/checkout" className="btn">
+          <a href="https://buy.stripe.com/test_28o4gHerKe9W4JWeUU" className="btn">
             proceed to checkout
-          </Link>
+          </a>
         ) : (
           <button
             type="button"
