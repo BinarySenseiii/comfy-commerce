@@ -2,16 +2,28 @@ import React, {useState} from 'react'
 import styled from 'styled-components'
 import {FaCheck} from 'react-icons/fa'
 import {product} from '../types'
-// import { useCartContext } from '../context/cart_context'
+import {useCartContext} from '../context/CartContext'
 import AmountButtons from './AmountButtons'
+import {Link} from 'react-router-dom'
+import {ACTIONS} from '../constants/Actions'
 
 const AddToCart: React.FC<{product?: product}> = ({product}) => {
-  const {stock, colors} = product!
+  const {id, stock, colors} = product!
+  const {dispatch} = useCartContext()
   const [mainColor, setMainColor] = useState(colors[0])
   const [quantity, setQuantity] = useState<number>(1)
 
+  const addToCartHandler = (
+    id: string,
+    color: string,
+    amount: number,
+    product?: product,
+  ) => {
+    dispatch({type: ACTIONS.ADD_TO_CART, payload: {id, color, amount, product}})
+  }
+
   const increase = () => {
-    setQuantity((oldAmount) => {
+    setQuantity(oldAmount => {
       let tempQuantity = oldAmount + 1
       if (tempQuantity > stock) {
         tempQuantity = stock
@@ -20,7 +32,7 @@ const AddToCart: React.FC<{product?: product}> = ({product}) => {
     })
   }
   const decrease = () => {
-    setQuantity((oldAmount) => {
+    setQuantity(oldAmount => {
       let tempQuantity = oldAmount - 1
       if (tempQuantity < 1) {
         tempQuantity = 1
@@ -54,6 +66,13 @@ const AddToCart: React.FC<{product?: product}> = ({product}) => {
           increaseHandler={increase}
           decreaseHandler={decrease}
         />
+        <Link
+          to="/cart"
+          className="btn"
+          onClick={() => addToCartHandler(id, mainColor, quantity, product)}
+        >
+          add to cart
+        </Link>
       </div>
     </Wrapper>
   )

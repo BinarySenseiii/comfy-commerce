@@ -2,15 +2,17 @@ import React from 'react'
 import {FaShoppingCart, FaUserPlus} from 'react-icons/fa'
 import {Link} from 'react-router-dom'
 import styled from 'styled-components'
+import { useCartContext } from '../context/CartContext'
 
 const CartButtons: React.FC = () => {
+  const {state} = useCartContext()
   return (
     <Wrapper className="cart-btn-wrapper">
       <Link to="/cart" className="cart-btn">
         Cart
         <span className="cart-container">
-          <FaShoppingCart />
-          <span className="cart-value"> 12 </span>
+          <FaShoppingCart /> 
+          <span className="cart-value"> {state.total_items} </span>
         </span>
       </Link>
       <button type="button" className="auth-btn">

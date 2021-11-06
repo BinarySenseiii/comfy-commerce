@@ -11,6 +11,9 @@ const Error = React.lazy(() => import('../pages/ErrorPage'))
 const Checkout = React.lazy(() => import('../pages/CheckoutPage'))
 const SingleProduct = React.lazy(() => import('../pages/SingleProduct'))
 const Products = React.lazy(() => import('../pages/ProductsPage'))
+const CartPage = React.lazy(() => import('../pages/CartPage'))
+
+
 
 const Router: React.FC = () => {
   return (
@@ -35,6 +38,7 @@ const Router: React.FC = () => {
           <Route exact path="/checkout" component={Checkout} />
           <Route exact path="/products" component={Products} />
           <Route exact path="/products/:id" component={SingleProduct} />
+          <Route exact path="/cart" component={CartPage} />
           <Route path="*" component={Error} />
         </Switch>
         <Footer />

@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {ProductsProvider} from './context/ProductContext'
 import {FilterProvider} from './context/FiltersContext'
+import {CartProvider} from './context/CartContext'
 import Router from './router/Router'
 import {QueryClient, QueryClientProvider} from 'react-query'
 import {ReactQueryDevtools} from 'react-query/devtools'
@@ -17,7 +18,9 @@ ReactDOM.render(
     <QueryClientProvider client={queryClient}>
       <ProductsProvider>
         <FilterProvider>
-          <Router />
+          <CartProvider>
+            <Router />
+          </CartProvider>
         </FilterProvider>
       </ProductsProvider>
       <ReactQueryDevtools initialIsOpen={false} />
