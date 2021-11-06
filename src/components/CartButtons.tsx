@@ -1,23 +1,39 @@
 import React from 'react'
-import {FaShoppingCart, FaUserPlus} from 'react-icons/fa'
+import {FaShoppingCart, FaUserPlus, FaUserMinus} from 'react-icons/fa'
 import {Link} from 'react-router-dom'
 import styled from 'styled-components'
-import { useCartContext } from '../context/CartContext'
+import {useCartContext} from '../context/CartContext'
+import {useAuth0} from '@auth0/auth0-react'
 
 const CartButtons: React.FC = () => {
   const {state} = useCartContext()
+  const {loginWithRedirect, logout, isAuthenticated} = useAuth0()
   return (
     <Wrapper className="cart-btn-wrapper">
       <Link to="/cart" className="cart-btn">
         Cart
         <span className="cart-container">
-          <FaShoppingCart /> 
+          <FaShoppingCart />
           <span className="cart-value"> {state.total_items} </span>
         </span>
       </Link>
-      <button type="button" className="auth-btn">
-        Login <FaUserPlus />
-      </button>
+      {isAuthenticated ? (
+        <button
+          onClick={() => logout({returnTo: window.location.origin})}
+          type="button"
+          className="auth-btn"
+        >
+          logout <FaUserMinus />
+        </button>
+      ) : (
+        <button
+          onClick={() => loginWithRedirect()}
+          type="button"
+          className="auth-btn"
+        >
+          Login <FaUserPlus />
+        </button>
+      )}
     </Wrapper>
   )
 }

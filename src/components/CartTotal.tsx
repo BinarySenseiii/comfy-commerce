@@ -2,11 +2,14 @@ import styled from 'styled-components'
 import {useCartContext} from '../context/CartContext'
 import {formatPrice} from '../utils/helpers'
 import {Link} from 'react-router-dom'
+import {useAuth0} from '@auth0/auth0-react'
 
 const CartTotals = () => {
   const {
     state: {total_amount, shipping_fee},
   } = useCartContext()
+  const {isAuthenticated, loginWithPopup} = useAuth0()
+
   return (
     <Wrapper>
       <div>
@@ -21,9 +24,19 @@ const CartTotals = () => {
             order total: <span>{formatPrice(total_amount + shipping_fee)}</span>
           </h4>
         </article>
-        <Link to="/checkout" className="btn">
-          proceed to checkout
-        </Link>
+        {isAuthenticated ? (
+          <Link to="/checkout" className="btn">
+            proceed to checkout
+          </Link>
+        ) : (
+          <button
+            type="button"
+            className="btn"
+            onClick={() => loginWithPopup()}
+          >
+            login to checkout
+          </button>
+        )}
       </div>
     </Wrapper>
   )

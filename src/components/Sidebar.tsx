@@ -8,10 +8,12 @@ import styled from 'styled-components'
 import {LinksT} from '../types'
 import {useProductsContext} from '../context/ProductContext'
 import {ACTIONS} from '../constants/Actions'
+import {useAuth0} from '@auth0/auth0-react'
 
 const Sidebar: React.FC = () => {
   const {state, dispatch} = useProductsContext()
   const {isSideBarOpen} = state
+  const {isAuthenticated} = useAuth0()
 
   return (
     <SidebarContainer>
@@ -20,8 +22,9 @@ const Sidebar: React.FC = () => {
       >
         <div className="sidebar-header">
           <img src={logo} className="logo" alt="comfy cloth not found" />
-          <button className="close-btn"
-           onClick={() => dispatch({type: ACTIONS.SIDEBAR_CLOSE})}
+          <button
+            className="close-btn"
+            onClick={() => dispatch({type: ACTIONS.SIDEBAR_CLOSE})}
           >
             <FaTimes />
           </button>
@@ -34,9 +37,11 @@ const Sidebar: React.FC = () => {
               </li>
             )
           })}
-          <li>
-            <Link to="/checkout"> Checkout </Link>
-          </li>
+          {isAuthenticated && (
+            <li>
+              <Link to="/checkout"> Checkout </Link>
+            </li>
+          )}
         </ul>
         <CartButtons />
       </aside>

@@ -8,9 +8,12 @@ import {LinksT} from '../types'
 import CartButtons from './CartButtons'
 import {useProductsContext} from '../context/ProductContext'
 import {ACTIONS} from '../constants/Actions'
+import {useAuth0} from '@auth0/auth0-react'
+
 
 const Navbar: React.FC = () => {
   const {dispatch} = useProductsContext()
+  const {isAuthenticated} = useAuth0()
   
   return (
     <NavContainer>
@@ -34,8 +37,11 @@ const Navbar: React.FC = () => {
               <li key={id}>
                 <Link to={url}> {text} </Link>
               </li>
-            )
+            ) 
           })}
+          {isAuthenticated && <li>
+            <Link to="checkout">checkout</Link>
+          </li>}
         </ul>
         <CartButtons />
       </div>
