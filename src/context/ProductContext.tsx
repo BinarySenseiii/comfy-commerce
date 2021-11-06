@@ -1,4 +1,9 @@
+import axios from 'axios'
+import React from 'react'
 import {createContext, useContext, useReducer} from 'react'
+import { useQuery } from 'react-query'
+import {products_url} from '../utils/Constants'
+
 
 import {ACTIONS} from '../constants/Actions'
 import {products, productsType} from '../types'
@@ -59,6 +64,27 @@ const reducer = (state: IState, action: IActions): IState => {
 
 export const ProductsProvider: React.FC = ({children}) => {
   const [state, dispatch] = useReducer(reducer, initialState)
+
+    // Queries
+    const {data, isLoading, isError} = useQuery<products[], Error>(
+      'products',
+      () => axios.get(products_url).then(response => response.data)
+    )
+  
+    React.useEffect(() => {
+      dispatch({
+        type: ACTIONS.GET_PRODUCTS_BEGIN,
+        payload: {
+          data,
+          isLoading,
+          isError,
+        },
+      })
+  
+      dispatch({
+        type: ACTIONS.GET_FEATURED_PRODUCTS,
+      })
+    }, [data, dispatch, isError, isLoading])
 
   return (
     <ProductsContext.Provider value={{state, dispatch}}>
