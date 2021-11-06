@@ -13,9 +13,7 @@ const Hero: React.FC = () => {
           comfort zone
         </h1>
         <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quibusdam
-          distinctio id recusandae error aspernatur mollitia aliquam neque!
-          Totam, molestias vitae!
+       We understand you also want to decorate your home with unique furniture. spring is approaching and its best time to refresh your home décor with colorful and spirited ideas.
         </p>
         <Link to="/products" className="btn hero-btn">
           {' '}

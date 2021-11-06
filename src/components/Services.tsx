@@ -11,10 +11,7 @@ const Services = () => {
             built only for u
           </h3>
           <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil
-            officia nemo libero quos enim commodi delectus provident quisquam
-            voluptates modi sit, sequi aut deleniti dolore recusandae placeat
-            non alias id.
+          The world is changing so are your difficulties to find your desired furniture, but you can now get high- end modern furniture delivered at your doorstep. Whether it is sculptural, standalone or a geometric furnishing accessory or contemporary knoll or Kartell designed furniture you are looking for; Urban Galleria provides excellent material home decor products.
           </p>
         </article>
         <div className="services-center">

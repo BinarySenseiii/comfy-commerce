@@ -24,19 +24,19 @@ export const services = [
     id: 1,
     icon: <GiCompass />,
     title: 'mission',
-    text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates, ea. Perferendis corrupti reiciendis nesciunt rerum velit autem unde numquam nisi',
+    text: 'Cradles to Crayons: Provides children from birth through age 12, living in homeless or low-income situations, with the essential items they need to thrive – at home, at school, and at play',
   },
   {
     id: 2,
     icon: <GiDiamondHard />,
     title: 'vision',
-    text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates, ea. Perferendis corrupti reiciendis nesciunt rerum velit autem unde numquam nisi',
+    text: 'when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,',
   },
   {
     id: 3,
     icon: <GiStabbedNote />,
     title: 'history',
-    text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates, ea. Perferendis corrupti reiciendis nesciunt rerum velit autem unde numquam nisi',
+    text: ' remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions',
   },
 ]
 

@@ -14,21 +14,7 @@ const AboutPage = () => {
             <h2>our story</h2>
             <div className="underline"></div>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit
-              placeat saepe beatae exercitationem numquam, vel inventore natus
-              nemo, fugiat soluta sit facere eum ea architecto dolores quod
-              officia molestias incidunt obcaecati nulla! A minima totam rem nam
-              animi blanditiis, ipsa neque, consequatur, asperiores earum
-              praesentium nostrum aliquam autem id commodi ex. Iusto dolor,
-              commodi cum ipsam doloribus porro consectetur labore quo inventore
-              dicta perferendis distinctio fuga minus possimus reprehenderit?
-              Cum consequuntur est quis rem labore consectetur placeat sunt
-              impedit quaerat distinctio tempore nihil nobis atque perspiciatis
-              modi esse culpa, eius illo aperiam accusantium quo quas at
-              delectus. Autem labore deserunt minus facilis, mollitia architecto
-              omnis error unde possimus placeat dolorum cupiditate quaerat
-              dolores sequi accusamus laudantium! Velit repudiandae tenetur ab
-              distinctio eum ullam facilis et
+            To discover new furniture design ideas was never so handy, browse over 500 products from our top categories for an ultimate online furniture shopping experience. To choose furniture for a living space is as tricky as doing the interiors. Either you’re redoing or changing the place, all you need to know is cheap online furniture shops from where you can buy quality products. From vintage to contemporary, we’ve a huge collection of home décor furniture items amongst which our lamps, area rugs, sofas, chairs and beds are making rounds in the local market. You can browse as many furniture designs via our portal across different categories; plus we have given the option of sorting and filter so that you can pick and choose size, color and availability.
             </p>
           </div>
         </article>
